@@ -2,7 +2,7 @@ import { Superhero } from '../models/hero.js';
 
 export const getAllHeroes = async (req, res) => {
   const page = parseInt(req.query.page) || 1;
-  const limit = 5;
+  const limit = parseInt(req.query.limit) || 5;
   const skip = (page - 1) * limit;
 
   const total = await Superhero.countDocuments();
@@ -58,6 +58,11 @@ export const updateHero = async (req, res) => {
   res.json(updatedHero);
 };
 
+export const deleteHero = async (req, res) => {
+  await Superhero.findByIdAndDelete(req.params.id);
+  res.status(204).send();
+};
+
 // export const updateHero = async (req, res) => {
 //   const updates = req.body;
 //   if (req.files.length) {
@@ -70,8 +75,3 @@ export const updateHero = async (req, res) => {
 //   );
 //   res.json(updatedHero);
 // };
-
-export const deleteHero = async (req, res) => {
-  await Superhero.findByIdAndDelete(req.params.id);
-  res.status(204).send();
-};
