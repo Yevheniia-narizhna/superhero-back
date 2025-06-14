@@ -10,7 +10,13 @@ import router from './routers/index.js';
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: 'https://superhero-front.vercel.app/',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true,
+  }),
+);
 
 app.use(cookieParser());
 app.use('/uploads', express.static('uploads'));
